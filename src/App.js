@@ -11,6 +11,7 @@ export class App extends Component {
       cityName: '',
       lon: '',
       lat: '',
+      map: '',
       flag: false,
     };
   };
@@ -27,6 +28,7 @@ export class App extends Component {
             cityName: axArray.display_name,
             lon: axArray.lon,
             lat: axArray.lat,
+            map: `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_API_KEY_FOR_CITY_PROJECT}&center=${axArray.lat},${axArray.lon}&zoom=1-18`,
             flag: true,
           })
       })
@@ -44,7 +46,7 @@ export class App extends Component {
       <div>
         <CityLocation getCityName={this.getCityName} getFromUser={this.getFromUser} />
         {
-          this.state.flag && <RecyclerCity cityName = {this.state.cityName} lon = {this.state.lon} lat = {this.state.lat} />
+          this.state.flag && <RecyclerCity cityName = {this.state.cityName} lon = {this.state.lon} lat = {this.state.lat} map = {this.state.map} />
         }
       </div>
     )
