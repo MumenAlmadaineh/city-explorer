@@ -20,3 +20,13 @@
 
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
+
+Name of feature: 3
+
+Estimate of time needed to complete: 6 hours
+
+Start time: 02:45
+
+Finish time: 11:15
+
+Actual time needed to complete: 8
