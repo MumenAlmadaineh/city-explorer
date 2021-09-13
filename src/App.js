@@ -3,6 +3,7 @@ import CityLocation from './component/CityLocation'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import RecyclerCity from './component/RecyclerCity';
+import Weather from './component/Weather';
 
 export class App extends Component {
   constructor(props){
@@ -13,6 +14,7 @@ export class App extends Component {
       lat: '',
       map: '',
       flag: false,
+      weatherInfo: [],
     };
   };
   getCityName = e => {e.preventDefault();
@@ -31,6 +33,10 @@ export class App extends Component {
             map: `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_API_KEY_FOR_CITY_PROJECT}&center=${axArray.lat},${axArray.lon}&zoom=1-18`,
             flag: true,
           })
+      }).then(()=>{
+        axios.get(`http://${process.env.REACT_APP_API_URL}/weather?lat=${this.state.lat}&lon=${this.state.lon}`).then(res=>{
+          console.log(res.data);
+        })
       })
 
   } 
@@ -48,6 +54,15 @@ export class App extends Component {
         {
           this.state.flag && <RecyclerCity cityName = {this.state.cityName} lon = {this.state.lon} lat = {this.state.lat} map = {this.state.map} />
         }
+        {
+        this.state.weatherInfo.map((item) => {
+					return (
+						<>
+							<h1>{item.date}</h1>
+							<h1>{item.description}</h1>
+						</>
+					);
+				})}
       </div>
     )
   }
