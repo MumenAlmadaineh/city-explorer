@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import CityLocation from './component/CityLocation'
-import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import RecyclerCity from './component/RecyclerCity';
 import Weather from './component/Weather';
+import AlertMes from './component/AlertMes';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export class App extends Component {
   constructor(props){
@@ -15,10 +16,13 @@ export class App extends Component {
       map: '',
       flag: false,
       weatherInfo: [],
+      weatherFlag: false,
+      alertFlag: false,
     };
   };
-  getCityName = e => {e.preventDefault();
-    let cityObj = {
+  getCityName = e => {
+    e.preventDefault();
+    if (this.state.cityName !=="") { let cityObj = {
       method: 'GET',
       baseURL:`https://api.locationiq.com/v1/autocomplete.php?key=${process.env.REACT_APP_API_KEY_FOR_CITY_PROJECT}&q=${this.state.cityName}`,
     }
@@ -34,12 +38,22 @@ export class App extends Component {
             flag: true,
           })
       }).then(()=>{
-        axios.get(`http://${process.env.REACT_APP_API_URL}/weather?lat=${this.state.lat}&lon=${this.state.lon}`).then(res=>{
-          console.log(res.data);
+        // let searchQuery = this.state.cityName.split(',')[0]; &searchQuery=${searchQuery}
+        axios.get(`http://${process.env.REACT_APP_API_URL}/weather?lat=${this.state.lat}&lon=${this.state.lon}`)
+        .then(res=>{
+          this.setState({
+            weatherInfo: res.data,
+            weatherFlag: true,
+          })  
         })
       })
 
-  } 
+  } else{
+    this.setState({
+      alertFlag: true,
+    })
+    }
+}
 
   getFromUser = e => {
     let cityNameEvent = e.target.value;
@@ -49,21 +63,19 @@ export class App extends Component {
   }
   render() {
     return (
-      <div>
+      <>
+      <h1>City location and weather</h1>
+         {this.state.alertFlag && <AlertMes/> }
+
         <CityLocation getCityName={this.getCityName} getFromUser={this.getFromUser} />
         {
           this.state.flag && <RecyclerCity cityName = {this.state.cityName} lon = {this.state.lon} lat = {this.state.lat} map = {this.state.map} />
         }
+
         {
-        this.state.weatherInfo.map((item) => {
-					return (
-						<>
-							<h1>{item.date}</h1>
-							<h1>{item.description}</h1>
-						</>
-					);
-				})}
-      </div>
+        this.state.weatherFlag &&<Weather weatherInfo={this.state.weatherInfo}/>
+        }
+      </>
     )
   }
 }
