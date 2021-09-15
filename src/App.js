@@ -39,7 +39,7 @@ export class App extends Component {
           })
       }).then(()=>{
         // let searchQuery = this.state.cityName.split(',')[0]; &searchQuery=${searchQuery}
-        axios.get(`http://${process.env.REACT_APP_API_URL}/weather?lat=${this.state.lat}&lon=${this.state.lon}`)
+        axios.get(`${process.env.REACT_APP_API_URL}/weather?lat=${this.state.lat}&lon=${this.state.lon}`)
         .then(res=>{
           this.setState({
             weatherInfo: res.data,
