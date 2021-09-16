@@ -5,9 +5,10 @@ import RecyclerCity from './component/RecyclerCity';
 import Weather from './component/Weather';
 import AlertMes from './component/AlertMes';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Movies from './component/Movies';
 
 export class App extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       cityName: '',
@@ -18,16 +19,19 @@ export class App extends Component {
       weatherInfo: [],
       weatherFlag: false,
       alertFlag: false,
+      movieInfo: [],
+      movieFlag: false,
     };
   };
+
   getCityName = e => {
     e.preventDefault();
-    if (this.state.cityName !=="") { let cityObj = {
-      method: 'GET',
-      baseURL:`https://api.locationiq.com/v1/autocomplete.php?key=${process.env.REACT_APP_API_KEY_FOR_CITY_PROJECT}&q=${this.state.cityName}`,
-    }
-    axios(cityObj).then(re => 
-      {
+    if (this.state.cityName !== "") {
+      let cityObj = {
+        method: 'GET',
+        baseURL: `https://api.locationiq.com/v1/autocomplete.php?key=${process.env.REACT_APP_API_KEY_FOR_CITY_PROJECT}&q=${this.state.cityName}`,
+      }
+      axios(cityObj).then(re => {
         let axArray = re.data[0];
         this.setState(
           {
@@ -37,23 +41,31 @@ export class App extends Component {
             map: `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_API_KEY_FOR_CITY_PROJECT}&center=${axArray.lat},${axArray.lon}&zoom=1-18`,
             flag: true,
           })
-      }).then(()=>{
+      }).then(() => {
         // let searchQuery = this.state.cityName.split(',')[0]; &searchQuery=${searchQuery}
         axios.get(`${process.env.REACT_APP_API_URL}/weather?lat=${this.state.lat}&lon=${this.state.lon}`)
-        .then(res=>{
-          this.setState({
-            weatherInfo: res.data,
-            weatherFlag: true,
-          })  
-        })
+          .then(res => {
+            this.setState({
+              weatherInfo: res.data,
+              weatherFlag: true,
+            })
+          })
+      }).then(() => {
+        let searchQuery = this.state.cityName.split(',')[0];
+        axios.get(`${process.env.REACT_APP_API_URL}/movies?searchQuery=${searchQuery}`).then(res => {
+            this.setState({
+              movieInfo: res.data,
+              movieFlag: true,
+            })
+          })
       })
 
-  } else{
-    this.setState({
-      alertFlag: true,
-    })
+    } else {
+      this.setState({
+        alertFlag: true,
+      })
     }
-}
+  }
 
   getFromUser = e => {
     let cityNameEvent = e.target.value;
@@ -64,20 +76,25 @@ export class App extends Component {
   render() {
     return (
       <>
-      <h1>City location and weather</h1>
-         {this.state.alertFlag && <AlertMes/> }
+        <h1>City location and weather</h1>
+        {this.state.alertFlag && <AlertMes />}
 
         <CityLocation getCityName={this.getCityName} getFromUser={this.getFromUser} />
         {
-          this.state.flag && <RecyclerCity cityName = {this.state.cityName} lon = {this.state.lon} lat = {this.state.lat} map = {this.state.map} />
+          this.state.flag && <RecyclerCity cityName={this.state.cityName} lon={this.state.lon} lat={this.state.lat} map={this.state.map} />
         }
 
         {
-        this.state.weatherFlag &&<Weather weatherInfo={this.state.weatherInfo}/>
+          this.state.weatherFlag && <Weather weatherInfo={this.state.weatherInfo} />
+        }
+
+        {
+          this.state.movieFlag && <Movies movieInfo = {this.state.movieInfo} />
         }
       </>
     )
   }
 }
+
 
 export default App
