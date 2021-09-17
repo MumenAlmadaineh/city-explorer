@@ -89,7 +89,17 @@ export class App extends Component {
         }
 
         {
-          this.state.movieFlag && <Movies movieInfo = {this.state.movieInfo} />
+          this.state.movieFlag && this.state.movieInfo.map(item =>{
+            return <Movies
+            title = {item.title} 
+            overview = {item.overview}
+            vote_average = {item.vote_average} 
+            vote_count = {item.vote_count}
+            poster_path = {`https://image.tmdb.org/t/p/w500/${item.poster_path}`} 
+            popularity = {item.popularity}
+            release_date = {item.release_date} />
+            
+          })
         }
       </>
     )
