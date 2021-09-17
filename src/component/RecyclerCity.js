@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 export class RecyclerCity extends Component {
     render() {
@@ -13,4 +13,4 @@ export class RecyclerCity extends Component {
     }
 }
 
-export default RecyclerCity
+export default RecyclerCity;

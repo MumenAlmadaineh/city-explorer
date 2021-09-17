@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Card } from 'react-bootstrap'
+import React, { Component } from 'react';
+import { Card } from 'react-bootstrap';
 
 export class Movies extends Component {
     render() {
@@ -26,4 +26,4 @@ export class Movies extends Component {
     }
 }
 
-export default Movies
+export default Movies;

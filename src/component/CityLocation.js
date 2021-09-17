@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 export class CityLocation extends Component {
     render() {
@@ -15,4 +15,4 @@ export class CityLocation extends Component {
     }
 }
 
-export default CityLocation
+export default CityLocation;

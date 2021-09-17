@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { ListGroup } from 'react-bootstrap';
 
 export class Weather extends Component {
@@ -21,4 +21,4 @@ render() {
 }
 }
 
-export default Weather
+export default Weather;
