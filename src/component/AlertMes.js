@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Alert } from 'react-bootstrap'
+import React, { Component } from 'react';
+import { Alert } from 'react-bootstrap';
 
 export class AlertMes extends Component {
     render() {
@@ -11,4 +11,4 @@ export class AlertMes extends Component {
     }
 }
 
-export default AlertMes 
+export default AlertMes;

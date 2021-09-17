@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import CityLocation from './component/CityLocation'
+import React, { Component } from 'react';
+import CityLocation from './component/CityLocation';
 import axios from 'axios';
 import RecyclerCity from './component/RecyclerCity';
 import Weather from './component/Weather';
@@ -80,4 +80,4 @@ export class App extends Component {
   }
 }
 
-export default App
+export default App;
