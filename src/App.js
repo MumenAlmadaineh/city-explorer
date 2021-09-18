@@ -42,7 +42,6 @@ export class App extends Component {
             flag: true,
           })
       }).then(() => {
-        // let searchQuery = this.state.cityName.split(',')[0]; &searchQuery=${searchQuery}
         axios.get(`${process.env.REACT_APP_API_URL}/weather?lat=${this.state.lat}&lon=${this.state.lon}`)
           .then(res => {
             this.setState({
@@ -85,21 +84,10 @@ export class App extends Component {
         }
 
         {
-          this.state.weatherFlag && <Weather weatherInfo={this.state.weatherInfo} />
+          this.state.weatherFlag && <Weather weatherInfo = {this.state.weatherInfo} />
         }
-
         {
-          this.state.movieFlag && this.state.movieInfo.map(item =>{
-            return <Movies
-            title = {item.title} 
-            overview = {item.overview}
-            vote_average = {item.vote_average} 
-            vote_count = {item.vote_count}
-            poster_path = {`https://image.tmdb.org/t/p/w500/${item.poster_path}`} 
-            popularity = {item.popularity}
-            release_date = {item.release_date} />
-            
-          })
+          this.state.movieFlag && <Movies movieInfo = {this.state.movieInfo} />
         }
       </>
     )

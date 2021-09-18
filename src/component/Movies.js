@@ -1,29 +1,41 @@
 import React, { Component } from 'react';
-import { Card } from 'react-bootstrap';
+import Movie from './Movie';
 
 export class Movies extends Component {
     render() {
+        let movieInfo = this.props.movieInfo
         return (
 
             <>
-                {<Card style={{ width: '18rem' }}>
-                    <Card.Img style = {{maxWidth: '100%'}} variant="top" src= {this.props.poster_path} />
-                    <Card.Body>
-                        <Card.Title>{this.props.title}</Card.Title>
-                        <Card.Text>
-                            {this.props.overview}<br/>
-                            {this.props.vote_average}<br/>
-                            {this.props.vote_count}<br/>
-                            {this.props.popularity}<br/>
-                            {this.props.release_date}<br/>                  
-                        </Card.Text>
-                    </Card.Body>
-                </Card>
-                }
-
+            {
+                movieInfo.map(item =>{
+                    return <Movie
+                    title = {item.title} 
+                    overview = {item.overview}
+                    vote_average = {item.vote_average} 
+                    vote_count = {item.vote_count}
+                    poster_path = {`https://image.tmdb.org/t/p/w500/${item.poster_path}`} 
+                    popularity = {item.popularity}
+                    release_date = {item.release_date} />
+                    
+                  })
+                
+            }
             </>
         )
     }
 }
 
 export default Movies;
+
+// this.state.movieInfo.map(item =>{
+//     return <Movies
+//     title = {item.title} 
+//     overview = {item.overview}
+//     vote_average = {item.vote_average} 
+//     vote_count = {item.vote_count}
+//     poster_path = {`https://image.tmdb.org/t/p/w500/${item.poster_path}`} 
+//     popularity = {item.popularity}
+//     release_date = {item.release_date} />
+    
+//   })
